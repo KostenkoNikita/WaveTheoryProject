@@ -31,9 +31,9 @@ namespace WaveTheoryProject
             list = new List<WavePointSingle>();
             double tmpX0 = Settings.Init.x0;
             double tmpZ0 = Settings.Init.z0;
-            for (tmpX0 = Settings.InitX0From; tmpX0 <= Settings.InitX0To; tmpX0 += Settings.X0_h)
+            for (tmpX0 = Settings.InitX0From- 5*Settings.X0_h; tmpX0 <= Settings.InitX0To+ 5*Settings.X0_h; tmpX0 += Settings.X0_h)
             {
-                list.Add(new WavePointSingle(time, Settings.Init.x0,z0, X, Z, Vx, Vz));
+                list.Add(new WavePointSingle(time, tmpX0, z0, X, Z, Vx, Vz));
             }
         }
 
@@ -97,6 +97,11 @@ namespace WaveTheoryProject
             List<DataPoint> res = new List<DataPoint>() { Capacity = l.Count };
             l.list.ForEach((p) => { res.Add(new DataPoint(p.X, p.Z)); });
             return res;
+        }
+
+        public override string ToString()
+        {
+            return $"t = {time}";
         }
     }
 }

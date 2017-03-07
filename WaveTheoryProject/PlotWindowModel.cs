@@ -54,9 +54,9 @@ namespace WaveTheoryProject
             PlotModel.LegendBackground = OxyColor.FromAColor(200, OxyColors.White);
             PlotModel.LegendBorder = OxyColors.Black;
             LinearAxis XAxis, YAxis;
-            XAxis = new LinearAxis(AxisPosition.Bottom, -5, 5, "X") { MajorGridlineStyle = LineStyle.Solid, MinorGridlineStyle = LineStyle.Dot, Title = "X", AbsoluteMaximum = 5, AbsoluteMinimum = -5, Font = "Times New Roman", FontSize = 15 };
+            XAxis = new LinearAxis(AxisPosition.Bottom, -10, 10, "X") { MajorGridlineStyle = LineStyle.Solid, MinorGridlineStyle = LineStyle.Dot, Title = "X", AbsoluteMaximum = 10, AbsoluteMinimum = -10, Font = "Times New Roman", FontSize = 15 };
             PlotModel.Axes.Add(XAxis);
-            YAxis = new LinearAxis(AxisPosition.Left, -5, 5, "Z") { MajorGridlineStyle = LineStyle.Solid, MinorGridlineStyle = LineStyle.Dot, Title = "Y", AbsoluteMaximum = 5, AbsoluteMinimum = -5, Font = "Times New Roman", FontSize = 15 };
+            YAxis = new LinearAxis(AxisPosition.Left, -2, 2, "Z") { MajorGridlineStyle = LineStyle.Solid, MinorGridlineStyle = LineStyle.Dot, Title = "Z", AbsoluteMaximum = 10, AbsoluteMinimum = -10, Font = "Times New Roman", FontSize = 15 };
             PlotModel.Axes.Add(YAxis);
         }
 
@@ -73,7 +73,18 @@ namespace WaveTheoryProject
                 foreach (DataPoint p in l) { ls.Points.Add(p); }
                 PlotModel.Series.Add(ls);
             }
-
+        }
+        public void DrawCurve(WavePointsListAtTime l)
+        {
+            lock (locker)
+            {
+                LineSeries ls = new LineSeries();
+                ls.Smooth = true;
+                ls.Color = OxyColors.Blue;
+                ls.StrokeThickness = 2;
+                foreach (WavePointSingle p in l) { ls.Points.Add(p); }
+                PlotModel.Series.Add(ls);
+            }
         }
 
         void CreateArrow()

@@ -26,6 +26,7 @@ namespace WaveTheoryProject
 
         public MainWindow()
         {
+            WindowReferences.main = this;
             viewModel = new PlotWindowModel();
             DataContext = viewModel;
             InitializeComponent();
@@ -38,11 +39,17 @@ namespace WaveTheoryProject
             aBox.Text = Settings.a.ToString();
             sigmaBox.Text = Settings.sigma.ToString();
             kBox.Text = c.k.ToString(Settings.Format);
+            tminBox.Text = Settings.InitTimeFrom.ToString(Settings.Format);
+            tmaxBox.Text = Settings.InitTimeTo.ToString(Settings.Format);
+            hBox.Text = Settings.Time_h.ToString(Settings.Format);
 
             x0Box.TextChanged += paramBox_TextChanged;
             z0Box.TextChanged += paramBox_TextChanged;
             sigmaBox.TextChanged += paramBox_TextChanged;
             aBox.TextChanged += paramBox_TextChanged;
+            tminBox.TextChanged += paramBox_TextChanged;
+            tmaxBox.TextChanged += paramBox_TextChanged;
+            hBox.TextChanged += paramBox_TextChanged;
         }
 
         private void paramBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -65,6 +72,42 @@ namespace WaveTheoryProject
                     case "aBox":
                         c.a = Convert.ToDouble(tmp.Text.Replace('.', ','));
                         break;
+                    case "tminBox":
+                        double tmp_tmin = Convert.ToDouble(tmp.Text.Replace('.', ','));
+                        if (tmp_tmin >= 0 && tmp_tmin < Settings.InitTimeTo)
+                        {
+                            Settings.InitTimeFrom = tmp_tmin;
+                            c.Refresh();
+                        }
+                        else
+                        {
+                            throw new ArgumentException();
+                        }
+                        break;
+                    case "tmaxBox":
+                        double tmp_tmax = Convert.ToDouble(tmp.Text.Replace('.', ','));
+                        if (tmp_tmax >= 0 && tmp_tmax > Settings.InitTimeFrom)
+                        {
+                            Settings.InitTimeTo = tmp_tmax;
+                            c.Refresh();
+                        }
+                        else
+                        {
+                            throw new ArgumentException();
+                        }
+                        break;
+                    case "hBox":
+                        double tmp_h = Convert.ToDouble(tmp.Text.Replace('.', ','));
+                        if (tmp_h > 0 && tmp_h < Settings.InitTimeTo-Settings.InitTimeFrom)
+                        {
+                            Settings.Time_h = tmp_h;
+                            c.Refresh();
+                        }
+                        else
+                        {
+                            throw new ArgumentException();
+                        }
+                        break;
                 }
                 datagrid.Items.Refresh();
             }
@@ -72,6 +115,14 @@ namespace WaveTheoryProject
             {
                 return;
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            WindowReferences.contoller = c;
+            WindowReferences.plot = new PlotWindow();
+            WindowReferences.plot.Show();
+            Hide();
         }
     }
 }

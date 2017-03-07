@@ -80,8 +80,16 @@ namespace WaveTheoryProject
             base._a = Settings.a = a.HasValue ? (double)a : base._a;
             base._sigma = Settings.sigma = sigma.HasValue ? (double)sigma : base._sigma;
             base._a = Settings.a = a.HasValue ? (double)a : base._a;
-            WavePointsListTimeline.Clear();
             FillWavePointsFixedX(x0fixed, this.z0fixed, Settings.InitTimeFrom, Settings.InitTimeTo, Settings.Time_h);
+            if (z0.HasValue || sigma.HasValue || a.HasValue)
+            { 
+                FillWavePointsTimeline(this.z0fixed);
+            }
+        }
+
+        public override void Refresh()
+        {
+            OnValueChanged?.Invoke(null, null, null, null);
             FillWavePointsTimeline(this.z0fixed);
         }
 

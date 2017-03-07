@@ -16,7 +16,7 @@ namespace WaveTheoryProject
         public abstract double z0fixed { get; set; }
         public abstract bool IsDrawingAvaliable { get; }
         public List<WavePointSingle> WavePointsFixedX = new List<WavePointSingle>();
-        public List<WavePointsListAtTime> WavePointsListTimeline;
+        public List<WavePointsListAtTime> WavePointsListTimeline = new List<WavePointsListAtTime>();
         delegate void FillTimeLineDelegate(List<WavePointsListAtTime> timeline, double time, double z0);
         FillTimeLineDelegate fillingDelegate;
         protected List<IAsyncResult> reslist;
@@ -34,6 +34,7 @@ namespace WaveTheoryProject
         }
         protected void FillWavePointsTimeline(double z0)
         {
+            WavePointsListTimeline.Clear();
             fillingDelegate = new FillTimeLineDelegate(FillWavePointsListAtTime);
             WavePointsListTimeline = new List<WavePointsListAtTime>();
             reslist = new List<IAsyncResult>();
@@ -44,11 +45,21 @@ namespace WaveTheoryProject
             }
             Settings.InitTimeFrom = tmptime;
         }
+        public void DrawWaveAtTime(double time, PlotWindowModel g)
+        {
+            WavePointsListAtTime l = WavePointsListTimeline.FirstOrDefault((list) => { if (Math.Abs(list.Time - time) <= Settings.Eps) { return true; } else { return false; } });
+            if (l != null)
+            {
+                g.DrawCurve(l);
+            }
+        }
         public delegate void ValueChangedHandler(double? x0, double? z0, double? sigma, double? a);
         public abstract event ValueChangedHandler OnValueChanged;
         public abstract double X(double x0, double z0,double t);
         public abstract double Z(double x0, double z0,double t);
         public abstract double Vx(double x, double z, double t);
-        public abstract double Vz(double x, double z, double t);        
+        public abstract double Vz(double x, double z, double t);
+        public abstract void Refresh();
     }
+
 }

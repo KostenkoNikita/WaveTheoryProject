@@ -16,9 +16,9 @@ namespace WaveTheoryProject
         public static double InitTimeFrom = 0;
         public static double InitTimeTo = 10;
         public static double Time_h = 0.1;
-        public static double InitX0From = -2;
-        public static double InitX0To = 2;
-        public static double X0_h = 0.05;
+        public static double InitX0From = -10;
+        public static double InitX0To = 10;
+        public static double X0_h = 0.1;
         public static ushort Precision { get { return _Precision.Decimals; } set { _Precision.Decimals = value; } }
         public static string Format => _Precision.Format;
         public static double Eps => _Precision.Eps;
