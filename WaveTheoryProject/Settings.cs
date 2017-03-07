@@ -9,13 +9,16 @@ namespace WaveTheoryProject
         {
             public static double x0 = 0;
             public static double z0 = 0;
-            public static double sigma = 2;
-            public static double a = 0.2;
         }
+        public static double sigma = 2;
+        public static double a = 0.2;
         public const double g = 9.809;
         public static double InitTimeFrom = 0;
         public static double InitTimeTo = 10;
         public static double Time_h = 0.1;
+        public static double InitX0From = -2;
+        public static double InitX0To = 2;
+        public static double X0_h = 0.05;
         public static ushort Precision { get { return _Precision.Decimals; } set { _Precision.Decimals = value; } }
         public static string Format => _Precision.Format;
         public static double Eps => _Precision.Eps;

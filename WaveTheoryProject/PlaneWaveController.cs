@@ -9,28 +9,29 @@ namespace WaveTheoryProject
 {
     class PlaneWaveController : WaveController
     {
-        public override double x0
+        public override bool IsDrawingAvaliable => base.reslist.IsAllThreadsCompleted();
+        public override double x0fixed
         {
             get
             {
-                return base._x0;
+                return base._x0fixed;
             }
             set
             {
-                base._x0 = value;
-                OnValueChanged?.Invoke(base._x0, null, null, null);
+                base._x0fixed = value;
+                OnValueChanged?.Invoke(value, null, null, null);
             }
         }
-        public override double z0
+        public override double z0fixed
         {
             get
             {
-                return base._z0;
+                return base._z0fixed;
             }
             set
             {
-                base._z0 = value;
-                OnValueChanged?.Invoke(null, base._z0, null, null);
+                base._z0fixed = value;
+                OnValueChanged?.Invoke(null, value, null, null);
             }
         }
         public override double sigma
@@ -63,23 +64,25 @@ namespace WaveTheoryProject
 
         public PlaneWaveController()
         {
+            _x0fixed = Settings.Init.x0;
+            _z0fixed = Settings.Init.z0;
             OnValueChanged += ValueChangedMethod;
-            base._x0 = Settings.Init.x0;
-            base._z0 = Settings.Init.z0;
-            base._sigma = Settings.Init.sigma;
-            base._a = Settings.Init.a;
-            WavePoints = new List<WavePoint>();
-            FillWavePointsDictionary(Settings.InitTimeFrom, Settings.InitTimeTo, Settings.Time_h);
+            base._sigma = Settings.sigma;
+            base._a = Settings.a;
+            FillWavePointsFixedX(x0fixed,z0fixed,Settings.InitTimeFrom, Settings.InitTimeTo, Settings.Time_h);
+            FillWavePointsTimeline(z0fixed);
         }
 
         void ValueChangedMethod(double? x0, double? z0, double? sigma, double? a)
         {
-            base._x0 = x0.HasValue ? (double)x0 : base._x0;
-            base._z0 = z0.HasValue ? (double)z0 : base._z0;
-            base._sigma = sigma.HasValue ? (double)sigma : base._sigma;
-            base._a = a.HasValue ? (double)a : base._a;
-            WavePoints.Clear();
-            FillWavePointsDictionary(Settings.InitTimeFrom, Settings.InitTimeTo, Settings.Time_h);
+            _x0fixed = x0.HasValue ? (double)x0 : x0fixed ;
+            _z0fixed = z0.HasValue ? (double)z0 : this.z0fixed;
+            base._a = Settings.a = a.HasValue ? (double)a : base._a;
+            base._sigma = Settings.sigma = sigma.HasValue ? (double)sigma : base._sigma;
+            base._a = Settings.a = a.HasValue ? (double)a : base._a;
+            WavePointsListTimeline.Clear();
+            FillWavePointsFixedX(x0fixed, this.z0fixed, Settings.InitTimeFrom, Settings.InitTimeTo, Settings.Time_h);
+            FillWavePointsTimeline(this.z0fixed);
         }
 
         public override double Vx(double x, double z, double t)
@@ -92,12 +95,12 @@ namespace WaveTheoryProject
             return a * sigma * Math.Exp(k * z) * Math.Sin(k * x) * Math.Cos(sigma * t);
         }
 
-        public override double X(double t)
+        public override double X(double x0, double z0, double t)
         {
             return x0 + a * Math.Exp(k * z0) * Math.Cos(k * x0) * Math.Sin(sigma * t);
         }
 
-        public override double Z(double t)
+        public override double Z(double x0, double z0, double t)
         {
             return z0 + a * Math.Exp(k * z0) * Math.Sin(k * x0) * Math.Sin(sigma * t);
         }

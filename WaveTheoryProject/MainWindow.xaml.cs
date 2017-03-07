@@ -30,13 +30,13 @@ namespace WaveTheoryProject
             DataContext = viewModel;
             InitializeComponent();
             c = new PlaneWaveController();
-            datagrid.ItemsSource = c.WavePoints;
+            datagrid.ItemsSource = c.WavePointsFixedX;
             datagrid.ColumnWidth = new DataGridLength(20, DataGridLengthUnitType.Star);
 
             x0Box.Text = Settings.Init.x0.ToString();
             z0Box.Text = Settings.Init.z0.ToString();
-            aBox.Text = Settings.Init.a.ToString();
-            sigmaBox.Text = Settings.Init.sigma.ToString();
+            aBox.Text = Settings.a.ToString();
+            sigmaBox.Text = Settings.sigma.ToString();
             kBox.Text = c.k.ToString(Settings.Format);
 
             x0Box.TextChanged += paramBox_TextChanged;
@@ -53,10 +53,10 @@ namespace WaveTheoryProject
                 switch (tmp.Name)
                 {
                     case "x0Box":
-                        c.x0 = Convert.ToDouble(tmp.Text.Replace('.', ','));
+                        c.x0fixed = Convert.ToDouble(tmp.Text.Replace('.', ','));           
                         break;
                     case "z0Box":
-                        c.z0 = Convert.ToDouble(tmp.Text.Replace('.', ','));
+                        c.z0fixed = Convert.ToDouble(tmp.Text.Replace('.', ','));
                         break;
                     case "sigmaBox":
                         c.sigma = Convert.ToDouble(tmp.Text.Replace('.', ','));
