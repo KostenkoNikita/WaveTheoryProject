@@ -1,5 +1,7 @@
 ﻿using OxyPlot;
 using System;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace WaveTheoryProject
 {
@@ -49,5 +51,7 @@ namespace WaveTheoryProject
                 Decimals = 4;
             }
         }
+        internal static ImageSource exitIcoSource= new BitmapImage(new Uri(@"Resources/exitIco.bmp", UriKind.Relative));
+        internal static ImageSource exitIcoSelectedSource = new BitmapImage(new Uri(@"Resources/exitSelectedIco.bmp", UriKind.Relative));
     }
 }

@@ -1,0 +1,45 @@
+﻿<Window x:Class="WaveTheoryProject.DrawWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Нарисовать волну с заданными параметрами" Height="500" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow">
+    <Grid ShowGridLines="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.2*"></RowDefinition>
+            <RowDefinition Height="0.2*"></RowDefinition>
+            <RowDefinition Height="0.2*"></RowDefinition>
+            <RowDefinition Height="0.2*"></RowDefinition>
+            <RowDefinition Height="0.4*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.3*"></ColumnDefinition>
+            <ColumnDefinition Width="0.7*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <TextBlock Grid.Column="0" Grid.Row="0" TextAlignment="Justify"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontFamily="Times New Roman">t =</TextBlock>
+        <TextBox x:Name="tBox" Grid.Column="1" Grid.Row="0" TextWrapping="Wrap" TextAlignment="Center"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="30" FontFamily="Times New Roman" TextChanged="TextBox_TextChanged"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="1" TextAlignment="Justify"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontFamily="Times New Roman">Z <Run BaselineAlignment="Subscript">0</Run> =</TextBlock>
+        <TextBox x:Name="z0Box" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" TextAlignment="Center"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="30" FontFamily="Times New Roman" TextChanged="TextBox_TextChanged"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="2" TextAlignment="Justify"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontFamily="Times New Roman">σ =</TextBlock>
+        <TextBox x:Name="sigmaBox" Grid.Column="1" Grid.Row="2" TextWrapping="Wrap" TextAlignment="Center"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="30" FontFamily="Times New Roman" TextChanged="TextBox_TextChanged"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="3" TextAlignment="Justify"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontFamily="Times New Roman">a =</TextBlock>
+        <TextBox x:Name="aBox" Grid.Column="1" Grid.Row="3" TextWrapping="Wrap" TextAlignment="Center"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="30" FontFamily="Times New Roman" TextChanged="TextBox_TextChanged"/>
+
+        
+
+        <Viewbox x:Name="okContainer" Grid.Row="4" Margin="7,7,7,7" Grid.Column="0" Grid.ColumnSpan="2">
+            <Image x:Name ="okImage" Source="Resources\okIco.png" MouseEnter="ico_MouseEnter" MouseLeave="ico_MouseLeave" MouseDown="ico_MouseDown"/>
+        </Viewbox>
+        <Border BorderBrush="Black"  BorderThickness="1" Grid.Row="0" Grid.Column="0"  Grid.RowSpan="1" Grid.ColumnSpan="2" />
+        <Border BorderBrush="Black"  BorderThickness="1" Grid.Row="1" Grid.Column="0"  Grid.RowSpan="1" Grid.ColumnSpan="2" />
+        <Border BorderBrush="Black"  BorderThickness="1" Grid.Row="2" Grid.Column="0"  Grid.RowSpan="1" Grid.ColumnSpan="2" />
+        <Border BorderBrush="Black"  BorderThickness="1" Grid.Row="3" Grid.Column="0"  Grid.RowSpan="1" Grid.ColumnSpan="2" />
+        <Border BorderBrush="Black"  BorderThickness="1" Grid.Row="4" Grid.Column="0"  Grid.RowSpan="1" Grid.ColumnSpan="2" />
+        <Border BorderBrush="Black"  BorderThickness="1" Grid.Row="5" Grid.Column="0"  Grid.RowSpan="1" Grid.ColumnSpan="2" />
+    </Grid>
+</Window>

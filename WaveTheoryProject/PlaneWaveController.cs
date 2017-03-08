@@ -58,7 +58,7 @@ namespace WaveTheoryProject
                 OnValueChanged?.Invoke(null, null, null, base._a);
             }
         }
-        public override double k => sigma*sigma/Settings.g;
+        public override double k => _sigma*_sigma/Settings.g;
 
         public override event ValueChangedHandler OnValueChanged;
 
@@ -76,7 +76,7 @@ namespace WaveTheoryProject
         void ValueChangedMethod(double? x0, double? z0, double? sigma, double? a)
         {
             _x0fixed = x0.HasValue ? (double)x0 : x0fixed ;
-            _z0fixed = z0.HasValue ? (double)z0 : this.z0fixed;
+            _z0fixed = Settings.Init.z0 = z0.HasValue ? (double)z0 : this.z0fixed;
             base._a = Settings.a = a.HasValue ? (double)a : base._a;
             base._sigma = Settings.sigma = sigma.HasValue ? (double)sigma : base._sigma;
             base._a = Settings.a = a.HasValue ? (double)a : base._a;
@@ -95,22 +95,22 @@ namespace WaveTheoryProject
 
         public override double Vx(double x, double z, double t)
         {
-            return a * sigma * Math.Exp(k * z) * Math.Cos(k * x) * Math.Cos(sigma * t);
+            return _a * _sigma * Math.Exp(k * z) * Math.Cos(k * x) * Math.Cos(_sigma * t);
         }
 
         public override double Vz(double x, double z, double t)
         {
-            return a * sigma * Math.Exp(k * z) * Math.Sin(k * x) * Math.Cos(sigma * t);
+            return _a * sigma * Math.Exp(k * z) * Math.Sin(k * x) * Math.Cos(_sigma * t);
         }
 
         public override double X(double x0, double z0, double t)
         {
-            return x0 + a * Math.Exp(k * z0) * Math.Cos(k * x0) * Math.Sin(sigma * t);
+            return x0 + _a * Math.Exp(k * z0) * Math.Cos(k * x0) * Math.Sin(_sigma * t);
         }
 
         public override double Z(double x0, double z0, double t)
         {
-            return z0 + a * Math.Exp(k * z0) * Math.Sin(k * x0) * Math.Sin(sigma * t);
+            return z0 + _a * Math.Exp(k * z0) * Math.Sin(k * x0) * Math.Sin(_sigma * t);
         }
     }
 }

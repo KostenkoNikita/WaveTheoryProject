@@ -78,12 +78,16 @@ namespace WaveTheoryProject
         {
             lock (locker)
             {
-                LineSeries ls = new LineSeries();
-                ls.Smooth = true;
-                ls.Color = OxyColors.Blue;
-                ls.StrokeThickness = 2;
-                foreach (WavePointSingle p in l) { ls.Points.Add(p); }
-                PlotModel.Series.Add(ls);
+                PlotModel.Series.Clear();
+                try
+                {
+                    PlotModel.Series.Add(l.WaveLineSeries);
+                }
+                catch
+                {
+                    PlotModel.Series.Remove(l.WaveLineSeries);
+                    PlotModel.Series.Add(l.WaveLineSeries);
+                }
             }
         }
 

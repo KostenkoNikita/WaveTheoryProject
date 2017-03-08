@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using OxyPlot;
+using OxyPlot.Series;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,10 @@ namespace WaveTheoryProject
     class WavePointsListAtTime : IEnumerable, IList<WavePointSingle>
     {
         List<WavePointSingle> list;
+
+        LineSeries ls;
+
+        public LineSeries WaveLineSeries => ls;
 
         double time, z0;
 
@@ -29,11 +34,16 @@ namespace WaveTheoryProject
             this.time = time;
             this.z0 = z0;
             list = new List<WavePointSingle>();
+            ls = new LineSeries();
+            ls.Smooth = true;
+            ls.Color = OxyColors.Blue;
+            ls.StrokeThickness = 2;
             double tmpX0 = Settings.Init.x0;
             double tmpZ0 = Settings.Init.z0;
             for (tmpX0 = Settings.InitX0From- 5*Settings.X0_h; tmpX0 <= Settings.InitX0To+ 5*Settings.X0_h; tmpX0 += Settings.X0_h)
             {
                 list.Add(new WavePointSingle(time, tmpX0, z0, X, Z, Vx, Vz));
+                ls.Points.Add(list[list.Count-1]);
             }
         }
 

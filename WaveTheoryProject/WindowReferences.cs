@@ -10,6 +10,5 @@ namespace WaveTheoryProject
     {
         public static MainWindow main { get; set; }
         public static PlotWindow plot { get; set; }
-        public static WaveController contoller { get; set; }
     }
 }

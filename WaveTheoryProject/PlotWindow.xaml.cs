@@ -22,37 +22,34 @@ namespace WaveTheoryProject
     /// </summary>
     public partial class PlotWindow : Window
     {
-        private PlotWindowModel viewModel;
+        internal PlotWindowModel viewModel;
         WaveController c;
-        double currentTime = 0;
+        double currentTime;
         double abs_increment = Settings.Time_h;
+        Thread t;
 
-        public PlotWindow()
+        internal PlotWindow(WaveController c)
         {
-            c = WindowReferences.contoller;//НЕ ЗАБУДЬ УДАЛИТЬ
+            this.c = c;
             viewModel = new PlotWindowModel();
+            t = new Thread(ThreadStart);
             DataContext = viewModel;
             InitializeComponent();
+            drawImage.InvalidateVisual();
             plot.Controller = new PlotController();
             plot.Controller.UnbindMouseDown(OxyMouseButton.Left);
             while (!c.IsDrawingAvaliable) { }
-            c.DrawWaveAtTime(0, viewModel);
-            PlotRefresh();
+            currentTime = 0;
+            tBox.Text = "0";
         }
 
-        private void PlotRefresh()
+        internal void PlotRefresh()
         {
             plot.InvalidatePlot(true);
         }
 
-        private void PlotClear()
-        {
-            viewModel.Clear();
-        }
-
         private void tBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            PlotClear();
             c.DrawWaveAtTime(currentTime, viewModel);
             PlotRefresh();
         }
@@ -81,20 +78,72 @@ namespace WaveTheoryProject
             }
         }
 
-        private void playButton_Click(object sender, RoutedEventArgs e)
-        {
-            Thread t = new Thread(ThreadStart);
-            t.Start(new Action(()=> {if ((currentTime += abs_increment) <= Settings.InitTimeTo){tBox.Text = currentTime.ToString(Settings.Format);}else{currentTime -= abs_increment;}}));
-        }
-
         void ThreadStart(object obj)
         {
             Action act = obj as Action;
-            int ms = (int)(abs_increment * 1000);
+            Action closeAct = () => { tBox.Text = "0"; };
             while (currentTime <= Settings.InitTimeTo - abs_increment)
             {
-                Thread.Sleep(ms);
+                Thread.Sleep(1000);
                 Dispatcher.Invoke(act);
+            }
+            currentTime = 0;
+            Dispatcher.Invoke(closeAct);
+        }
+
+        private void ico_MouseEnter(object sender, MouseEventArgs e)
+        {
+            switch ((sender as Image).Name)
+            {
+                case "menuImage": menuContainer.Margin = new Thickness(3,3,3,3); return;
+                case "playImage": playContainer.Margin = new Thickness(14,14,14,14); return;
+                case "pauseImage": pauseContainer.Margin = new Thickness(3,3,3,3); return;
+                case "drawImage": drawContainer.Margin = new Thickness(3, 3, 3, 3); return;
+            }
+        }
+
+        private void ico_MouseLeave(object sender, MouseEventArgs e)
+        {
+            switch ((sender as Image).Name)
+            {
+                case "menuImage": menuContainer.Margin = new Thickness(7,7,7,7); return;
+                case "playImage": playContainer.Margin = new Thickness(18,18,18,18); return;
+                case "pauseImage": pauseContainer.Margin = new Thickness(7,7,7,7); return;
+                case "drawImage": drawContainer.Margin = new Thickness(7,7,7,7); return;
+            }
+        }
+
+        private void ico_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            switch ((sender as Image).Name)
+            {
+                case "menuImage":
+                    WindowReferences.main.Show();
+                    viewModel = null;
+                    if (t.IsAlive) { t.Abort(); }
+                    t = null;
+                    Close();
+                    return;
+                case "playImage":
+                    if (t.IsAlive)
+                    {
+                        t.Abort();
+                        t = new Thread(ThreadStart);
+                        currentTime = Settings.InitTimeFrom;
+                    }
+                    else
+                    {
+                        t = new Thread(ThreadStart);
+                    }
+                    t.Start(new Action(() => { if ((currentTime += abs_increment) <= Settings.InitTimeTo) { tBox.Text = currentTime.ToString(Settings.Format); } else { currentTime -= abs_increment; } }));
+                    return;
+                case "pauseImage":
+                    t.Abort();
+                    return;
+                case "drawImage":
+                    DrawWindow dw = new DrawWindow(this,c);
+                    dw.Show();
+                    return;
             }
         }
     }

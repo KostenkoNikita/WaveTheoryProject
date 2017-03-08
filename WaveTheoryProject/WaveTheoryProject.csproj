@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\favicon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="OxyPlot">
       <HintPath>..\..\..\..\..\..\Programming\C#\WPF\Oxxxymiron\OxyPlot.dll</HintPath>
@@ -68,6 +71,9 @@
     <Compile Include="PlotWindow.xaml.cs">
       <DependentUpon>PlotWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DrawWindow.xaml.cs">
+      <DependentUpon>DrawWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="WaveController.cs" />
     <Compile Include="PlaneWaveController.cs" />
@@ -87,6 +93,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="PlotWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DrawWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -117,6 +127,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\menuIco.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\exitIco.bmp" />
+    <Resource Include="Resources\exitSelectedIco.bmp" />
+    <Resource Include="Resources\favicon.ico" />
+    <Resource Include="Resources\okIco.png" />
+    <Resource Include="Resources\plotIco.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\pauseIco.png" />
+    <Resource Include="Resources\playIco.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\drawIco.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

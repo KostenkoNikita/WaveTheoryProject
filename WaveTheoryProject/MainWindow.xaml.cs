@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 using OxyPlot;
 
 namespace WaveTheoryProject
@@ -117,12 +118,35 @@ namespace WaveTheoryProject
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ico_MouseEnter(object sender, MouseEventArgs e)
         {
-            WindowReferences.contoller = c;
-            WindowReferences.plot = new PlotWindow();
-            WindowReferences.plot.Show();
-            Hide();
+            switch ((sender as Image).Name)
+            {
+                case "plotImage": plotContainer.Margin = new Thickness(1,1,1,1); return;
+                case "exitImage": exitImage.Source = Settings.exitIcoSelectedSource; return;
+            }
+        }
+
+        private void ico_MouseLeave(object sender, MouseEventArgs e)
+        {
+            switch ((sender as Image).Name)
+            {
+                case "plotImage": plotContainer.Margin = new Thickness(5,5,5,5); return;
+                case "exitImage": exitImage.Source = Settings.exitIcoSource; return;
+            }
+        }
+
+        private void ico_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            switch ((sender as Image).Name)
+            {
+                case "plotImage":
+                    WindowReferences.plot = new PlotWindow(c);
+                    WindowReferences.plot.Show();
+                    Hide();
+                    break;
+                case "exitImage": Process.GetCurrentProcess().Kill(); return;
+            }
         }
     }
 }

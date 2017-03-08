@@ -53,6 +53,17 @@ namespace WaveTheoryProject
                 g.DrawCurve(l);
             }
         }
+        public WavePointsListAtTime DrawSingleWavePointsList(double t, double z0, double sigma, double a)
+        {
+            double tmp_sigma = _sigma;
+            double tmp_a = _a;
+            _sigma = sigma;
+            _a = a;
+            WavePointsListAtTime l = new WavePointsListAtTime(t, z0, X, Z, Vx, Vz);
+            _sigma = tmp_sigma;
+            _a = tmp_a;
+            return l;
+        }
         public delegate void ValueChangedHandler(double? x0, double? z0, double? sigma, double? a);
         public abstract event ValueChangedHandler OnValueChanged;
         public abstract double X(double x0, double z0,double t);
