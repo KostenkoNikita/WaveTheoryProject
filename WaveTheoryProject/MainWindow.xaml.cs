@@ -31,26 +31,48 @@ namespace WaveTheoryProject
             viewModel = new PlotWindowModel();
             DataContext = viewModel;
             InitializeComponent();
-            c = new PlaneWaveController();
-            datagrid.ItemsSource = c.WavePointsFixedX;
+            labsList.SelectionChanged += LabsList_SelectionChanged;
+
+            labsList.Items.Add("Плоские стоячие\nволны");
+            labsList.Items.Add("Плоские прогрес-\nсивные волны");
+            labsList.SelectedIndex = 0;
+
             datagrid.ColumnWidth = new DataGridLength(20, DataGridLengthUnitType.Star);
 
             x0Box.Text = Settings.Init.x0.ToString();
             z0Box.Text = Settings.Init.z0.ToString();
             aBox.Text = Settings.a.ToString();
-            sigmaBox.Text = Settings.sigma.ToString();
-            kBox.Text = c.k.ToString(Settings.Format);
+            kBox.Text = Settings.k.ToString();
+            sigmaBox.Text = c.sigma.ToString(Settings.Format);
             tminBox.Text = Settings.InitTimeFrom.ToString(Settings.Format);
             tmaxBox.Text = Settings.InitTimeTo.ToString(Settings.Format);
             hBox.Text = Settings.Time_h.ToString(Settings.Format);
+            p0Box.Text = Settings.p0.ToString(Settings.Format);
+            roBox.Text = Settings.ro.ToString(Settings.Format);
 
             x0Box.TextChanged += paramBox_TextChanged;
             z0Box.TextChanged += paramBox_TextChanged;
-            sigmaBox.TextChanged += paramBox_TextChanged;
+            kBox.TextChanged += paramBox_TextChanged;
             aBox.TextChanged += paramBox_TextChanged;
             tminBox.TextChanged += paramBox_TextChanged;
             tmaxBox.TextChanged += paramBox_TextChanged;
             hBox.TextChanged += paramBox_TextChanged;
+            p0Box.TextChanged += paramBox_TextChanged;
+            roBox.TextChanged += paramBox_TextChanged;
+        }
+
+        private void LabsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch (labsList.SelectedIndex)
+            {
+                case 0:
+                    c = new PlaneWaveController();
+                    break;
+                case 1:
+                    c = new ProgressiveWaveController();
+                    break;
+            }
+            datagrid.ItemsSource = c.WavePointsFixedX;
         }
 
         private void paramBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -66,12 +88,26 @@ namespace WaveTheoryProject
                     case "z0Box":
                         c.z0fixed = Convert.ToDouble(tmp.Text.Replace('.', ','));
                         break;
-                    case "sigmaBox":
-                        c.sigma = Convert.ToDouble(tmp.Text.Replace('.', ','));
-                        kBox.Text = c.k.ToString(Settings.Format);
+                    case "kBox":
+                        c.k = Convert.ToDouble(tmp.Text.Replace('.', ','));
+                        sigmaBox.Text = c.sigma.ToString(Settings.Format);
                         break;
                     case "aBox":
                         c.a = Convert.ToDouble(tmp.Text.Replace('.', ','));
+                        break;
+                    case "p0Box":
+                        c.p0 = Convert.ToDouble(tmp.Text.Replace('.', ','));
+                        break;
+                    case "roBox":
+                        double tmp_ro = Convert.ToDouble(tmp.Text.Replace('.', ','));
+                        if (tmp_ro > 0)
+                        {
+                            c.ro = tmp_ro;
+                        }
+                        else
+                        {
+                            throw new ArgumentException();
+                        }
                         break;
                     case "tminBox":
                         double tmp_tmin = Convert.ToDouble(tmp.Text.Replace('.', ','));

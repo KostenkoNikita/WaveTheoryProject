@@ -29,7 +29,7 @@ namespace WaveTheoryProject
 
         public bool IsReadOnly => false;
 
-        public WavePointsListAtTime(double time, double z0, Func<double,double,double, double> X, Func<double, double, double, double> Z, Func<double, double, double, double> Vx, Func<double, double, double, double> Vz)
+        public WavePointsListAtTime(double time, double z0, Func<double,double,double, double> X, Func<double, double, double, double> Z, Func<double, double, double, double> Vx, Func<double, double, double, double> Vz, Func<double, double, double, double> P)
         {
             this.time = time;
             this.z0 = z0;
@@ -42,7 +42,7 @@ namespace WaveTheoryProject
             double tmpZ0 = Settings.Init.z0;
             for (tmpX0 = Settings.InitX0From- 5*Settings.X0_h; tmpX0 <= Settings.InitX0To+ 5*Settings.X0_h; tmpX0 += Settings.X0_h)
             {
-                list.Add(new WavePointSingle(time, tmpX0, z0, X, Z, Vx, Vz));
+                list.Add(new WavePointSingle(time, tmpX0, z0, X, Z, Vx, Vz,P));
                 ls.Points.Add(list[list.Count-1]);
             }
         }

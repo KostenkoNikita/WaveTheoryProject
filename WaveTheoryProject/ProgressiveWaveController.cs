@@ -1,5 +1,4 @@
 ﻿using System;
-using OxyPlot;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WaveTheoryProject
 {
-    class PlaneWaveController : WaveController
+    class ProgressiveWaveController : WaveController
     {
         public override bool IsDrawingAvaliable => base.reslist.IsAllThreadsCompleted();
 
@@ -20,7 +19,7 @@ namespace WaveTheoryProject
             set
             {
                 base._x0fixed = value;
-                OnValueChanged?.Invoke(value, null, null, null, null,null);
+                OnValueChanged?.Invoke(value, null, null, null, null, null);
             }
         }
 
@@ -89,11 +88,11 @@ namespace WaveTheoryProject
             }
         }
 
-        public override double sigma => Math.Sqrt(_k * g);
+        public override double sigma => Math.Sqrt(_k*g);
 
         public override event ValueChangedHandler OnValueChanged;
 
-        public PlaneWaveController()
+        public ProgressiveWaveController()
         {
             _x0fixed = Settings.Init.x0;
             _z0fixed = Settings.Init.z0;
@@ -102,13 +101,13 @@ namespace WaveTheoryProject
             base._p0 = Settings.p0;
             base._ro = Settings.ro;
             OnValueChanged += ValueChangedMethod;
-            FillWavePointsFixedX(x0fixed,z0fixed,Settings.InitTimeFrom, Settings.InitTimeTo, Settings.Time_h);
+            FillWavePointsFixedX(x0fixed, z0fixed, Settings.InitTimeFrom, Settings.InitTimeTo, Settings.Time_h);
             FillWavePointsTimeline(z0fixed);
         }
 
         void ValueChangedMethod(double? x0, double? z0, double? k, double? a, double? p0, double? ro)
         {
-            _x0fixed = Settings.Init.x0 = x0.HasValue ? (double)x0 : x0fixed ;
+            _x0fixed = Settings.Init.x0 = x0.HasValue ? (double)x0 : x0fixed;
             _z0fixed = Settings.Init.z0 = z0.HasValue ? (double)z0 : this.z0fixed;
             base._a = Settings.a = a.HasValue ? (double)a : base._a;
             base._k = Settings.k = k.HasValue ? (double)k : base._k;
@@ -117,40 +116,40 @@ namespace WaveTheoryProject
             base._ro = Settings.ro = ro.HasValue ? (double)ro : base._ro;
             FillWavePointsFixedX(x0fixed, this.z0fixed, Settings.InitTimeFrom, Settings.InitTimeTo, Settings.Time_h);
             if (z0.HasValue || k.HasValue || a.HasValue)
-            { 
+            {
                 FillWavePointsTimeline(this.z0fixed);
             }
         }
 
         public override void Refresh()
         {
-            OnValueChanged?.Invoke(null, null, null, null,null,null);
+            OnValueChanged?.Invoke(null, null, null, null, null, null);
             FillWavePointsTimeline(this.z0fixed);
         }
 
         public override double Vx(double x, double z, double t)
         {
-            return _a * sigma * Math.Exp(_k * z) * Math.Cos(_k * x) * Math.Cos(sigma * t);
+            return _a * sigma * Math.Exp(_k * z) * Math.Cos(sigma * t + _k * x);
         }
 
         public override double Vz(double x, double z, double t)
         {
-            return _a * sigma * Math.Exp(_k * z) * Math.Sin(_k * x) * Math.Cos(sigma * t);
+            return _a * sigma * Math.Exp(_k*z) * Math.Sin(sigma * t + _k * x);
         }
 
         public override double X(double x0, double z0, double t)
         {
-            return x0 + _a * Math.Exp(_k * z0) * Math.Cos(_k * x0) * Math.Sin(sigma * t);
+            return x0 + _a * Math.Exp(_k * z0) * Math.Sin(sigma * t + _k * x0);
         }
 
         public override double Z(double x0, double z0, double t)
         {
-            return z0 + _a * Math.Exp(_k * z0) * Math.Sin(_k * x0) * Math.Sin(sigma * t);
+            return z0 - _a * Math.Exp(_k * z0) * Math.Cos(sigma * t + _k * x0);
         }
 
         public override double P(double x, double z, double t)
         {
-            return p0 - ro * g * z + ro * ((a * sigma / _k) * Math.Exp(_k * x) * Math.Sin(_k * x) * Math.Sin(sigma * t));
+            return _p0 - _ro * g * z - _a * g * _ro * Math.Exp(_k * z) * Math.Cos(sigma * t + _k * x);
         }
     }
 }

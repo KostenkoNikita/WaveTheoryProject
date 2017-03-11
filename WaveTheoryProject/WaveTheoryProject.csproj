@@ -74,6 +74,7 @@
     <Compile Include="DrawWindow.xaml.cs">
       <DependentUpon>DrawWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ProgressiveWaveController.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="WaveController.cs" />
     <Compile Include="PlaneWaveController.cs" />

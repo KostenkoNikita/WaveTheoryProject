@@ -12,9 +12,10 @@ namespace WaveTheoryProject
             public static double x0 = 0;
             public static double z0 = 0;
         }
-        public static double sigma = 2;
+        public static double k = 0.5;
         public static double a = 0.2;
-        public const double g = 9.809;
+        public static double ro = 1000;
+        public static double p0 = 101300;
         public static double InitTimeFrom = 0;
         public static double InitTimeTo = 10;
         public static double Time_h = 0.1;

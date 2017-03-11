@@ -20,7 +20,7 @@ namespace WaveTheoryProject
     /// </summary>
     public partial class DrawWindow : Window
     {
-        double t, z0, sigma, a;
+        double t, z0, k, a;
         PlotWindow w;
         WaveController c;
 
@@ -30,7 +30,7 @@ namespace WaveTheoryProject
             Deactivated += (sender, e) => { Close(); };
             tBox.Text = "0";
             z0Box.Text = Settings.Init.z0.ToString(Settings.Format);
-            sigmaBox.Text = Settings.sigma.ToString(Settings.Format);
+            kBox.Text = Settings.k.ToString(Settings.Format);
             aBox.Text = Settings.a.ToString(Settings.Format);
             this.w = w;
             this.c = c;
@@ -44,13 +44,21 @@ namespace WaveTheoryProject
                 switch (tmp.Name)
                 {
                     case "tBox":
-                        t = Convert.ToDouble(tmp.Text.Replace('.', ','));
+                        double tmp_t = Convert.ToDouble(tmp.Text.Replace('.', ','));
+                        if (tmp_t >= 0)
+                        {
+                            t = Convert.ToDouble(tmp.Text.Replace('.', ','));
+                        }
+                        else
+                        {
+                            throw new ArgumentException();
+                        }
                         return;
                     case "z0Box":
                         z0 = Convert.ToDouble(tmp.Text.Replace('.', ','));
                         return;
-                    case "sigmaBox":
-                        sigma = Convert.ToDouble(tmp.Text.Replace('.', ','));
+                    case "kBox":
+                       k= Convert.ToDouble(tmp.Text.Replace('.', ','));
                         return;
                     case "aBox":
                         a = Convert.ToDouble(tmp.Text.Replace('.', ','));
@@ -75,7 +83,7 @@ namespace WaveTheoryProject
 
         private void ico_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            WavePointsListAtTime l = c.DrawSingleWavePointsList(t, z0, sigma, a);
+            WavePointsListAtTime l = c.DrawSingleWavePointsList(t, z0, k, a);
             w.viewModel.DrawCurve(l);
             w.PlotRefresh();
             Close();
