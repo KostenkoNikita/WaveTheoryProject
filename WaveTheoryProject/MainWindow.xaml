@@ -39,9 +39,9 @@
 
             <TextBlock Grid.Column="0" Grid.Row="0" TextAlignment="Justify"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontFamily="Times New Roman">X<Run BaselineAlignment="Subscript">0</Run> =</TextBlock>
             <TextBlock Grid.Column="0" Grid.Row="1" TextAlignment="Justify"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontFamily="Times New Roman">Z<Run BaselineAlignment="Subscript">0</Run> =</TextBlock>
-            <TextBlock Grid.Column="0" Grid.Row="2" TextAlignment="Justify"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" FontFamily="Times New Roman">a =</TextBlock>
-            <TextBlock Grid.Column="0" Grid.Row="3" TextAlignment="Justify"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" FontFamily="Times New Roman">k =</TextBlock>
-            <TextBlock Grid.Column="0" Grid.Row="4" TextAlignment="Justify"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Times New Roman">σ =</TextBlock>
+            <TextBlock x:Name="aBlock" Grid.Column="0" Grid.Row="2" TextAlignment="Justify"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" FontFamily="Times New Roman">a =</TextBlock>
+            <TextBlock x:Name="kBlock" Grid.Column="0" Grid.Row="3" TextAlignment="Justify"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" FontFamily="Times New Roman">k =</TextBlock>
+            <TextBlock x:Name="sigmaBlock" Grid.Column="0" Grid.Row="4" TextAlignment="Justify"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Times New Roman">σ =</TextBlock>
             <TextBlock Grid.Column="0" Grid.Row="5" TextAlignment="Justify"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Times New Roman">P<Run BaselineAlignment="Subscript">0</Run> =</TextBlock>
             <TextBlock Grid.Column="0" Grid.Row="6" TextAlignment="Justify"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Times New Roman">ρ =</TextBlock>
 

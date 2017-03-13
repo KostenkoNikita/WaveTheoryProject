@@ -12,6 +12,12 @@ namespace WaveTheoryProject
             public static double x0 = 0;
             public static double z0 = 0;
         }
+        internal static class Canal
+        {
+            public static double delta = 3;
+            public static double h = 1;
+            public static double a0 = 1.0 / 3.0;
+        }
         public static double k = 0.5;
         public static double a = 0.2;
         public static double ro = 1000;
@@ -21,7 +27,7 @@ namespace WaveTheoryProject
         public static double Time_h = 0.1;
         public static double InitX0From = -10;
         public static double InitX0To = 10;
-        public static double X0_h = 0.1;
+        public static double X0_h = 0.05;
         public static ushort Precision { get { return _Precision.Decimals; } set { _Precision.Decimals = value; } }
         public static string Format => _Precision.Format;
         public static double Eps => _Precision.Eps;

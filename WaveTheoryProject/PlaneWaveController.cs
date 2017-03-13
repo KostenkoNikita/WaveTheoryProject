@@ -112,7 +112,6 @@ namespace WaveTheoryProject
             _z0fixed = Settings.Init.z0 = z0.HasValue ? (double)z0 : this.z0fixed;
             base._a = Settings.a = a.HasValue ? (double)a : base._a;
             base._k = Settings.k = k.HasValue ? (double)k : base._k;
-            base._a = Settings.a = a.HasValue ? (double)a : base._a;
             base._p0 = Settings.p0 = p0.HasValue ? (double)p0 : base._p0;
             base._ro = Settings.ro = ro.HasValue ? (double)ro : base._ro;
             FillWavePointsFixedX(x0fixed, this.z0fixed, Settings.InitTimeFrom, Settings.InitTimeTo, Settings.Time_h);

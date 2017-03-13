@@ -91,6 +91,19 @@ namespace WaveTheoryProject
             }
         }
 
+        public void DrawCanal()
+        {
+            PolygonAnnotation Border = new PolygonAnnotation();
+            Border.Fill = OxyColors.Transparent;
+            Border.Points.Add(new DataPoint(0, -1.0/3.0));
+            Border.Points.Add(new DataPoint(Settings.Canal.delta, 2.0 / 3.0));
+            Border.Points.Add(new DataPoint(Settings.Canal.delta, -Settings.Canal.h));
+            Border.Points.Add(new DataPoint(0, -Settings.Canal.h));
+            Border.StrokeThickness = 2;
+            Border.Stroke = OxyColors.Black;
+            PlotModel.Annotations.Add(Border);
+        }
+
         void CreateArrow()
         {
             arrow = new ArrowAnnotation()

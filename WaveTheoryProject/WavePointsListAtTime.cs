@@ -40,7 +40,7 @@ namespace WaveTheoryProject
             ls.StrokeThickness = 2;
             double tmpX0 = Settings.Init.x0;
             double tmpZ0 = Settings.Init.z0;
-            for (tmpX0 = Settings.InitX0From- 5*Settings.X0_h; tmpX0 <= Settings.InitX0To+ 5*Settings.X0_h; tmpX0 += Settings.X0_h)
+            for (tmpX0 = Settings.InitX0From; tmpX0 <= Settings.InitX0To; tmpX0 += Settings.X0_h)
             {
                 list.Add(new WavePointSingle(time, tmpX0, z0, X, Z, Vx, Vz,P));
                 ls.Points.Add(list[list.Count-1]);

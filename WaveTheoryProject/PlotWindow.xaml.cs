@@ -32,6 +32,7 @@ namespace WaveTheoryProject
         {
             this.c = c;
             viewModel = new PlotWindowModel();
+            viewModel.DrawCanal();
             t = new Thread(ThreadStart);
             DataContext = viewModel;
             InitializeComponent();
