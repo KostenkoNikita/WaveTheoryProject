@@ -64,6 +64,7 @@ namespace WaveTheoryProject
 
         private void LabsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (c != null) { while (!c.IsDrawingAvaliable) ; }
             switch (labsList.SelectedIndex)
             {
                 case 0:

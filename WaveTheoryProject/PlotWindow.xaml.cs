@@ -26,13 +26,15 @@ namespace WaveTheoryProject
         WaveController c;
         double currentTime;
         double abs_increment = Settings.Time_h;
+        bool isCanal;
         Thread t;
 
         internal PlotWindow(WaveController c)
         {
             this.c = c;
+            isCanal = c is CanalWaveController;
             viewModel = new PlotWindowModel();
-            viewModel.DrawCanal();
+            if (c is CanalWaveController) { viewModel.DrawCanal(); }
             t = new Thread(ThreadStart);
             DataContext = viewModel;
             InitializeComponent();
@@ -52,6 +54,11 @@ namespace WaveTheoryProject
         private void tBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             c.DrawWaveAtTime(currentTime, viewModel);
+            if (isCanal)
+            {
+                viewModel.DeleteCanale();
+                viewModel.DrawCanal();
+            }
             PlotRefresh();
         }
 

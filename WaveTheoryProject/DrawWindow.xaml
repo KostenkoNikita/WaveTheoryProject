@@ -24,10 +24,10 @@
         <TextBlock Grid.Column="0" Grid.Row="1" TextAlignment="Justify"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontFamily="Times New Roman">Z <Run BaselineAlignment="Subscript">0</Run> =</TextBlock>
         <TextBox x:Name="z0Box" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" TextAlignment="Center"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="30" FontFamily="Times New Roman" TextChanged="TextBox_TextChanged"/>
 
-        <TextBlock Grid.Column="0" Grid.Row="2" TextAlignment="Justify"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontFamily="Times New Roman">k =</TextBlock>
+        <TextBlock x:Name="kBlock" Grid.Column="0" Grid.Row="2" TextAlignment="Justify"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontFamily="Times New Roman">k =</TextBlock>
         <TextBox x:Name="kBox" Grid.Column="1" Grid.Row="2" TextWrapping="Wrap" TextAlignment="Center"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="30" FontFamily="Times New Roman" TextChanged="TextBox_TextChanged"/>
 
-        <TextBlock Grid.Column="0" Grid.Row="3" TextAlignment="Justify"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontFamily="Times New Roman">a =</TextBlock>
+        <TextBlock x:Name="aBlock" Grid.Column="0" Grid.Row="3" TextAlignment="Justify"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontFamily="Times New Roman">a =</TextBlock>
         <TextBox x:Name="aBox" Grid.Column="1" Grid.Row="3" TextWrapping="Wrap" TextAlignment="Center"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="30" FontFamily="Times New Roman" TextChanged="TextBox_TextChanged"/>
 
         

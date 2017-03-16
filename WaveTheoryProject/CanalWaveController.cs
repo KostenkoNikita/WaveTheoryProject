@@ -102,7 +102,23 @@ namespace WaveTheoryProject
 
         public override double P(double x, double z, double t)
         {
-            return 0;
+            return p0 - ro * g * z - ro * dphi_dt(x, z, t);
+        }
+
+        private double dphi_dt(double x, double z, double t)
+        {
+            return (phi(x,z,t + Settings.Eps) - phi(x, z, t - Settings.Eps)) / (2 * Settings.Eps) + ((phi(x, z, t + Settings.Eps) - phi(x, z, t - Settings.Eps)) / (2 * Settings.Eps) - (phi(x, z, t + Settings.Eps) - phi(x, z, t - Settings.Eps)) / (2 * 2 * Settings.Eps)) / 3;
+        }
+
+        private double phi(double x, double z, double t)
+        {
+            double sum = 0;
+            for (uint n = 1; n < 2; n++)
+            {
+                cwp = new CanalWaveParams(n);
+                sum += FnFunc(z, t, ref cwp) * Math.Cos(cwp.k * x);
+            }
+            return -0.5 * g * Settings.Canal.a0 * t - g * sum;
         }
 
         public override void Refresh()
@@ -113,36 +129,44 @@ namespace WaveTheoryProject
 
         public override double Vx(double x, double z, double t)
         {
-            return 0;
+            double sum = 0;
+            for (uint n = 1; n < 2; n++)
+            {
+                cwp = new CanalWaveParams(n);
+                sum += FxnFunc(z, t, ref cwp) * Math.Sin(cwp.k * x);
+            }
+            return g * sum;
         }
 
         public override double Vz(double x, double z, double t)
         {
-            return 0;
+            double sum = 0;
+            for (uint n = 1; n < 2; n++)
+            {
+                cwp = new CanalWaveParams(n);
+                sum += FznFunc(z, t, ref cwp) * Math.Cos(cwp.k * x);
+            }
+            return -g * sum;
         }
 
         public override double X(double x0, double z0, double t)
         {
-            double sum = 0, tmp=sum;
+            double sum = 0;
             for (uint n = 1; n<2 ; n++)
             {
                 cwp = new CanalWaveParams(n);
                 sum += GxnFunc(z0, t, ref cwp) * Math.Sin(cwp.k * x0);
-                if (Math.Abs(sum - tmp) < Settings.Eps/10000.0) { break; }
-                else { tmp = sum; }
             }
             return x0 + g * sum;
         }
 
         public override double Z(double x0, double z0, double t)
         {
-            double sum = 0, tmp = sum;
+            double sum = 0;
             for (uint n = 1; n<2 ; n++)
             {
                 cwp = new CanalWaveParams(n);
                 sum += GznFunc(z0, t, ref cwp) * Math.Cos(cwp.k * x0);
-                if (Math.Abs(sum - tmp) < Settings.Eps/10000.0) { break; }
-                else { tmp = sum; }
             }
             return z0 - g * sum;
         }
@@ -150,6 +174,10 @@ namespace WaveTheoryProject
         double FxnFunc(double z, double t, ref CanalWaveParams p)
         {
             return p.k * p.a * Math.Cosh(p.k * (z + Settings.Canal.h)) * Math.Sin(p.sigma * t) / (p.sigma * Math.Cosh(p.k * Settings.Canal.h));
+        }
+        double FnFunc(double z, double t, ref CanalWaveParams p)
+        {
+            return FxnFunc(z, t, ref p) / p.k;
         }
         double FznFunc(double z, double t, ref CanalWaveParams p)
         {
