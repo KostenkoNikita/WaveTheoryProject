@@ -80,6 +80,7 @@
     <Compile Include="Settings.cs" />
     <Compile Include="WaveController.cs" />
     <Compile Include="PlaneWaveController.cs" />
+    <Compile Include="WaveGroupController.cs" />
     <Compile Include="WavePoint.cs" />
     <Compile Include="WavePointsListAtTime.cs" />
     <Compile Include="WindowReferences.cs" />

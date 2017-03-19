@@ -36,6 +36,7 @@ namespace WaveTheoryProject
             labsList.Items.Add("Плоские стоячие\nволны");
             labsList.Items.Add("Плоские прогрес-\nсивные волны");
             labsList.Items.Add("Движение волны в\nканале");
+            labsList.Items.Add("Группа волн");
             labsList.SelectedIndex = 0;
 
             datagrid.ColumnWidth = new DataGridLength(20, DataGridLengthUnitType.Star);
@@ -100,6 +101,17 @@ namespace WaveTheoryProject
                     kBox.Text = Settings.Canal.h.ToString(Settings.Format);
                     aBox.Text = Settings.Canal.delta.ToString(Settings.Format); 
                     break;
+                case 3:
+                    Settings.InitX0From = -10;
+                    Settings.InitX0To = 10;
+                    c = new WaveGroupController();
+                    kBlock.Text = "k =";
+                    aBlock.Text = "a =";
+                    sigmaBlock.Visibility = Visibility.Visible;
+                    sigmaBox.Visibility = Visibility.Visible;
+                    kBox.Text = Settings.k.ToString(Settings.Format);
+                    aBox.Text = Settings.a.ToString(Settings.Format);
+                    break;
             }
             datagrid.ItemsSource = c.WavePointsFixedX;
         }
@@ -115,10 +127,18 @@ namespace WaveTheoryProject
                         c.x0fixed = Convert.ToDouble(tmp.Text.Replace('.', ','));           
                         break;
                     case "z0Box":
-                        c.z0fixed = Convert.ToDouble(tmp.Text.Replace('.', ','));
+                        double tmp_z0 = Convert.ToDouble(tmp.Text.Replace('.', ','));
+                        if (tmp_z0 <= 0)
+                        {
+                            c.z0fixed = tmp_z0;
+                        }
+                        else
+                        {
+                            throw new ArgumentException();
+                        }
                         break;
                     case "kBox":
-                        if (labsList.SelectedIndex == 0 || labsList.SelectedIndex == 1)
+                        if (labsList.SelectedIndex == 0 || labsList.SelectedIndex == 1 || labsList.SelectedIndex == 3)
                         {
                             c.k = Convert.ToDouble(tmp.Text.Replace('.', ','));
                             sigmaBox.Text = c.sigma.ToString(Settings.Format);
@@ -129,7 +149,7 @@ namespace WaveTheoryProject
                         }
                         break;
                     case "aBox":
-                        if (labsList.SelectedIndex == 0 || labsList.SelectedIndex == 1)
+                        if (labsList.SelectedIndex == 0 || labsList.SelectedIndex == 1 || labsList.SelectedIndex == 3)
                         {
                             c.a = Convert.ToDouble(tmp.Text.Replace('.', ','));
                         }

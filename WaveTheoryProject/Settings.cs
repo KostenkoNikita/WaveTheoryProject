@@ -18,6 +18,10 @@ namespace WaveTheoryProject
             public static double h = 1;
             public static double a0 = 1.0 / 3.0;
         }
+        internal static class WaveGroup
+        {
+            public static double kMultiplicator = 2;
+        }
         public static double k = 0.5;
         public static double a = 0.2;
         public static double ro = 1000;
