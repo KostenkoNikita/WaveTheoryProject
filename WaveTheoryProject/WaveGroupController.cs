@@ -157,12 +157,19 @@ namespace WaveTheoryProject
 
         public override double X(double x0, double z0, double t)
         {
-            return x0 + _a * (Math.Exp(_k * z0) * Math.Sin(_k * x0 - sigma * t) + Math.Exp(_k2 * z0) * Math.Sin(_k2 * x0 - sigma2 * t));
+            //return x0 + _a * (Math.Exp(_k * z0) * Math.Sin(_k * x0 - sigma * t) + Math.Exp(_k2 * z0) * Math.Sin(_k2 * x0 - sigma2 * t));
+            return x0 + A(x0, t) * Math.Sin(0.5 * (_k + _k2) * x0 - 0.5 * (sigma + sigma2) * t);
         }
 
         public override double Z(double x0, double z0, double t)
         {
-            return z0 - _a * (Math.Exp(_k * z0) * Math.Cos(_k * x0 - sigma * t) + Math.Exp(_k2 * z0) * Math.Cos(_k2 * x0 - sigma2 * t));
+            //return z0 - _a * (Math.Exp(_k * z0) * Math.Cos(_k * x0 - sigma * t) + Math.Exp(_k2 * z0) * Math.Cos(_k2 * x0 - sigma2 * t));
+            return -A(x0, t) * Math.Cos(0.5 * (_k + _k2) * x0 - 0.5 * (sigma + sigma2) * t);
+        }
+
+        public double A(double x0, double t)
+        {
+            return 2 * _a * Math.Cos(0.5 * (_k - _k2) * x0 - 0.5 * (sigma - sigma2) * t);
         }
 
         public override double P(double x, double z, double t)

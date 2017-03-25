@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using OxyPlot;
+using OxyPlot.Series;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -54,6 +56,16 @@ namespace WaveTheoryProject
             if (l != null)
             {
                 g.DrawCurve(l);
+            }
+            if (this is WaveGroupController)
+            {
+                WaveGroupController ctmp = this as WaveGroupController;
+                LineSeries lSpec = new LineSeries() { LineStyle = LineStyle.Dash, Color = OxyColors.Red, StrokeThickness = 2 };
+                for (double x = Settings.InitX0From; x <= Settings.InitX0To; x += Settings.X0_h)
+                {
+                    lSpec.Points.Add(new DataPoint(x,ctmp.A(x,time)));
+                }
+                g.DrawCurve(lSpec);
             }
         }
         public WavePointsListAtTime DrawSingleWavePointsList(double t, double z0, double k, double a)

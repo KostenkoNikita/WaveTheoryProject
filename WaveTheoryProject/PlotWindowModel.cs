@@ -1,7 +1,7 @@
 ﻿#pragma warning disable 612
+#define NEW_CAP
 
 using System;
-using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using OxyPlot;
@@ -14,8 +14,11 @@ namespace WaveTheoryProject
     class PlotWindowModel
     {
         private PlotModel p;
+
         private ArrowAnnotation arrow;
+
         private TextAnnotation arrowText;
+
         object locker = new object();
 
         public PlotModel PlotModel
@@ -74,6 +77,7 @@ namespace WaveTheoryProject
                 PlotModel.Series.Add(ls);
             }
         }
+
         public void DrawCurve(WavePointsListAtTime l)
         {
             lock (locker)
@@ -91,8 +95,25 @@ namespace WaveTheoryProject
             }
         }
 
+        public void DrawCurve(LineSeries l)
+        {
+            lock (locker)
+            {
+                try
+                {
+                    PlotModel.Series.Add(l);
+                }
+                catch
+                {
+                    PlotModel.Series.Remove(l);
+                    PlotModel.Series.Add(l);
+                }
+            }
+        }
+
         public void DrawCanal()
         {
+#if !NEW_CAP
             PolygonAnnotation Border = new PolygonAnnotation();
             Border.Fill = OxyColors.Transparent;
             Border.Points.Add(new DataPoint(0, 10));
@@ -118,6 +139,33 @@ namespace WaveTheoryProject
             t.StrokeThickness = 0;
             t.FontSize = 20;
             PlotModel.Annotations.Add(t);
+#else
+            PolygonAnnotation Border = new PolygonAnnotation();
+            Border.Fill = OxyColors.Transparent;
+            Border.Points.Add(new DataPoint(0, 10));
+            Border.Points.Add(new DataPoint(0, -Settings.Canal.h));
+            Border.Points.Add(new DataPoint(Settings.Canal.delta, -Settings.Canal.h));
+            Border.Points.Add(new DataPoint(Settings.Canal.delta, 10));
+            Border.StrokeThickness = 2;
+            Border.Stroke = OxyColors.Black;
+            PlotModel.Annotations.Add(Border);
+            PolygonAnnotation BorderDashPart = new PolygonAnnotation();
+            BorderDashPart.Fill = OxyColors.Transparent;
+            BorderDashPart.Points.Add(new DataPoint(0, -Settings.Canal.delta *Math.Sqrt(3) / 6.0));
+            BorderDashPart.Points.Add(new DataPoint(Settings.Canal.delta, Settings.Canal.delta * Math.Sqrt(3) / 6.0));
+            BorderDashPart.StrokeThickness = 1;
+            BorderDashPart.LineStyle = LineStyle.Dot;
+            BorderDashPart.Stroke = OxyColors.Gray;
+            PlotModel.Annotations.Add(BorderDashPart);
+            TextAnnotation t = new TextAnnotation();
+            t.Text = "x/δ - 1/3";
+            t.TextPosition = new DataPoint(Settings.Canal.delta + 1, 2.0 / 3.0);
+            t.TextColor = OxyColors.Black;
+            t.Background = OxyColors.Transparent;
+            t.StrokeThickness = 0;
+            t.FontSize = 20;
+            PlotModel.Annotations.Add(t);
+#endif
         }
 
         public void DeleteCanale()

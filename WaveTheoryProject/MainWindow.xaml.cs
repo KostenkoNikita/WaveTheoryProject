@@ -127,15 +127,16 @@ namespace WaveTheoryProject
                         c.x0fixed = Convert.ToDouble(tmp.Text.Replace('.', ','));           
                         break;
                     case "z0Box":
-                        double tmp_z0 = Convert.ToDouble(tmp.Text.Replace('.', ','));
-                        if (tmp_z0 <= 0)
-                        {
-                            c.z0fixed = tmp_z0;
-                        }
-                        else
-                        {
-                            throw new ArgumentException();
-                        }
+                        //double tmp_z0 = Convert.ToDouble(tmp.Text.Replace('.', ','));
+                        c.z0fixed = Convert.ToDouble(tmp.Text.Replace('.', ','));
+                        //if (tmp_z0 <= 0)
+                        //{
+                        //    c.z0fixed = tmp_z0;
+                        //}
+                        //else
+                        //{
+                        //    throw new ArgumentException();
+                        //}
                         break;
                     case "kBox":
                         if (labsList.SelectedIndex == 0 || labsList.SelectedIndex == 1 || labsList.SelectedIndex == 3)

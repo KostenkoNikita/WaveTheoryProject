@@ -1,4 +1,6 @@
-﻿using OxyPlot;
+﻿#define NEW_CAP
+
+using OxyPlot;
 using System;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -16,7 +18,11 @@ namespace WaveTheoryProject
         {
             public static double delta = 3;
             public static double h = 1;
+#if NEW_CAP
+            public static double a0 = 0;
+#else
             public static double a0 = 1.0 / 3.0;
+#endif
         }
         internal static class WaveGroup
         {

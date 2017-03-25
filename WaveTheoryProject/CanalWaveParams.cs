@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define NEW_CAP
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +19,17 @@ namespace WaveTheoryProject
         public CanalWaveParams(uint n)
         {
             if (n == 0) { throw new ArgumentException(); }
-            this._n = n;
+            _n = n;
             _k = Math.PI * _n / Settings.Canal.delta;
+#if NEW_CAP
+            _a = (2.0 / (Math.Sqrt(3) * Settings.Canal.delta * _k * _k)) * 
+                (-1+Math.Cos(Settings.Canal.delta*_k)+ 0.5*Settings.Canal.delta*_k*Math.Sin(Settings.Canal.delta*_k));
+#else
             _a = (2.0 / (3 * Settings.Canal.delta * Settings.Canal.delta * _k * _k)) *
                 (-3 + 3 * Math.Cos(Settings.Canal.delta * _k) + 2 * Settings.Canal.delta * _k *
                 Math.Sin(Settings.Canal.delta * _k));
+#endif
+
             _sigma = Math.Sqrt(WaveController.g*_k*Math.Tanh(_k*Settings.Canal.h));
         }
 
