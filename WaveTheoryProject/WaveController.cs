@@ -12,6 +12,7 @@ namespace WaveTheoryProject
     {
         public const double g = 9.809;
         protected double _a, _x0fixed, _z0fixed, _p0, _ro, _k;
+        public bool WaveInTimeWasBuilt = false;
         public abstract double sigma { get; }
         public abstract double a { get; set; }
         public abstract double k { get; set; }
@@ -52,10 +53,18 @@ namespace WaveTheoryProject
         }
         public void DrawWaveAtTime(double time, PlotWindowModel g)
         {
+            WaveInTimeWasBuilt = false;
             WavePointsListAtTime l = WavePointsListTimeline.FirstOrDefault((list) => { if (Math.Abs(list.Time - time) <= Settings.Eps) { return true; } else { return false; } });
             if (l != null)
             {
-                g.DrawCurve(l);
+                try
+                {
+                    g.DrawCurve(l);
+                }
+                catch
+                {
+                    return;
+                } 
             }
             if (this is WaveGroupController)
             {
@@ -67,6 +76,7 @@ namespace WaveTheoryProject
                 }
                 g.DrawCurve(lSpec);
             }
+            WaveInTimeWasBuilt = true;
         }
         public WavePointsListAtTime DrawSingleWavePointsList(double t, double z0, double k, double a)
         {

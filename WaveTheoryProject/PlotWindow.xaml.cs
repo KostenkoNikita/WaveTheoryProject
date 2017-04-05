@@ -92,7 +92,10 @@ namespace WaveTheoryProject
             Action closeAct = () => { tBox.Text = "0"; };
             while (currentTime <= Settings.InitTimeTo - abs_increment)
             {
-                Thread.Sleep(42);
+                Thread.Sleep(20);
+                while (!c.WaveInTimeWasBuilt)
+                {
+                }
                 Dispatcher.Invoke(act);
             }
             currentTime = 0;

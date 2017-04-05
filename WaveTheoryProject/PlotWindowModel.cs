@@ -1,5 +1,5 @@
 ﻿#pragma warning disable 612
-#define NEW_CAP
+//#define NEW_CAP
 
 using System;
 using System.Collections.Generic;
@@ -158,8 +158,8 @@ namespace WaveTheoryProject
             BorderDashPart.Stroke = OxyColors.Gray;
             PlotModel.Annotations.Add(BorderDashPart);
             TextAnnotation t = new TextAnnotation();
-            t.Text = "x/δ - 1/3";
-            t.TextPosition = new DataPoint(Settings.Canal.delta + 1, 2.0 / 3.0);
+            t.Text = "x*sqrt(3)/3 - δ*sqrt(3)/6";
+            t.TextPosition = new DataPoint(Settings.Canal.delta - 4, Settings.Canal.delta * Math.Sqrt(3) / 6.0);
             t.TextColor = OxyColors.Black;
             t.Background = OxyColors.Transparent;
             t.StrokeThickness = 0;

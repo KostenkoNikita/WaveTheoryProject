@@ -1,4 +1,4 @@
-﻿#define NEW_CAP
+﻿//#define NEW_CAP
 
 using OxyPlot;
 using System;
@@ -27,6 +27,10 @@ namespace WaveTheoryProject
         internal static class WaveGroup
         {
             public static double kMultiplicator = 2;
+        }
+        internal static class DecayingWave
+        {
+            public static double Beta = 0.1;
         }
         public static double k = 0.5;
         public static double a = 0.2;

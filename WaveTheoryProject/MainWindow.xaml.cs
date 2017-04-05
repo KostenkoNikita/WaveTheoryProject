@@ -37,6 +37,7 @@ namespace WaveTheoryProject
             labsList.Items.Add("Плоские прогрес-\nсивные волны");
             labsList.Items.Add("Движение волны в\nканале");
             labsList.Items.Add("Группа волн");
+            labsList.Items.Add("Затухающая волна");
             labsList.SelectedIndex = 0;
 
             datagrid.ColumnWidth = new DataGridLength(20, DataGridLengthUnitType.Star);
@@ -112,6 +113,17 @@ namespace WaveTheoryProject
                     kBox.Text = Settings.k.ToString(Settings.Format);
                     aBox.Text = Settings.a.ToString(Settings.Format);
                     break;
+                case 4:
+                    Settings.InitX0From = -20;
+                    Settings.InitX0To = 20;
+                    c = new DecayingWaveController();
+                    kBlock.Text = "k =";
+                    aBlock.Text = "a =";
+                    sigmaBlock.Visibility = Visibility.Visible;
+                    sigmaBox.Visibility = Visibility.Visible;
+                    kBox.Text = Settings.k.ToString(Settings.Format);
+                    aBox.Text = Settings.a.ToString(Settings.Format);
+                    break;
             }
             datagrid.ItemsSource = c.WavePointsFixedX;
         }
@@ -139,7 +151,7 @@ namespace WaveTheoryProject
                         //}
                         break;
                     case "kBox":
-                        if (labsList.SelectedIndex == 0 || labsList.SelectedIndex == 1 || labsList.SelectedIndex == 3)
+                        if (labsList.SelectedIndex == 0 || labsList.SelectedIndex == 1 || labsList.SelectedIndex == 3 || labsList.SelectedIndex == 4)
                         {
                             c.k = Convert.ToDouble(tmp.Text.Replace('.', ','));
                             sigmaBox.Text = c.sigma.ToString(Settings.Format);
@@ -150,7 +162,7 @@ namespace WaveTheoryProject
                         }
                         break;
                     case "aBox":
-                        if (labsList.SelectedIndex == 0 || labsList.SelectedIndex == 1 || labsList.SelectedIndex == 3)
+                        if (labsList.SelectedIndex == 0 || labsList.SelectedIndex == 1 || labsList.SelectedIndex == 3 || labsList.SelectedIndex == 4)
                         {
                             c.a = Convert.ToDouble(tmp.Text.Replace('.', ','));
                         }
